@@ -1,170 +1,226 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=36 format=3 uid="uid://dsn8ociahewxv"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=50 format=3 uid="uid://dsn8ociahewxv"]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2q0d8"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_47nl2"]
 animation = &"falling"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xm7s7"]
-animation = &"idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uq7g3"]
-animation = &"running"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ab4rp"]
-animation = &"start_running"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jb40q"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rj6rt"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_77qli"]
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_lqvtg"]
+states/End/position = Vector2(115, 100)
+states/Falling/node = SubResource("AnimationNodeAnimation_47nl2")
+states/Falling/position = Vector2(355, 100)
+transitions = ["Start", "Falling", SubResource("AnimationNodeStateMachineTransition_rj6rt")]
+graph_offset = Vector2(-192, -33)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bq2gn"]
+animation = &"punch"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hytv7"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ryqpw"]
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_gigxc"]
-states/End/position = Vector2(126, 100)
-states/Running/node = SubResource("AnimationNodeAnimation_uq7g3")
-states/Running/position = Vector2(466, 100)
-"states/Start Running/node" = SubResource("AnimationNodeAnimation_ab4rp")
-"states/Start Running/position" = Vector2(325, 100)
-transitions = ["Start", "Start Running", SubResource("AnimationNodeStateMachineTransition_jb40q"), "Start Running", "Running", SubResource("AnimationNodeStateMachineTransition_77qli")]
-graph_offset = Vector2(-270, -55)
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_d4bg0"]
+states/End/position = Vector2(120, 100)
+states/Punch/node = SubResource("AnimationNodeAnimation_bq2gn")
+states/Punch/position = Vector2(153, 195)
+transitions = ["Start", "Punch", SubResource("AnimationNodeStateMachineTransition_hytv7"), "Punch", "End", SubResource("AnimationNodeStateMachineTransition_ryqpw")]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v5o6d"]
-animation = &"stopping"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yy7na"]
+animation = &"idle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nq7iy"]
-animation = &"turning_around_while_running"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qbmr4"]
+animation = &"running"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vd460"]
-animation = &"turning_around"
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_q14gh"]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xs6nw"]
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mwt8n"]
+graph_offset = Vector2(-382.364, -85.6364)
+"nodes/Run Anim/node" = SubResource("AnimationNodeAnimation_qbmr4")
+"nodes/Run Anim/position" = Vector2(-80, 140)
+"nodes/Run Speed/node" = SubResource("AnimationNodeTimeScale_q14gh")
+"nodes/Run Speed/position" = Vector2(100, 160)
+node_connections = [&"Run Speed", 0, &"Run Anim", &"output", 0, &"Run Speed"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wp3nu"]
+animation = &"start_running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m141n"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fwhxw"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1lf50"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_kcwuq"]
+states/BlendTree/node = SubResource("AnimationNodeBlendTree_mwt8n")
+states/BlendTree/position = Vector2(485, 100)
+states/End/position = Vector2(109, 100)
+states/start_running/node = SubResource("AnimationNodeAnimation_wp3nu")
+states/start_running/position = Vector2(327, 100)
+transitions = ["Start", "start_running", SubResource("AnimationNodeStateMachineTransition_m141n"), "start_running", "BlendTree", SubResource("AnimationNodeStateMachineTransition_1lf50")]
+graph_offset = Vector2(-228, -23)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ij1p3"]
+animation = &"stopping"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tbyol"]
+animation = &"turning_around_while_running"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jbinl"]
+animation = &"turning_around"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_365to"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ua7r8"]
+advance_mode = 2
+advance_expression = "input_active"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w1qrf"]
+advance_mode = 2
+advance_expression = "!input_active and !moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_edvm0"]
 advance_mode = 2
 advance_expression = "flipping"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_alt5i"]
-priority = 2
-advance_mode = 2
-advance_expression = "input_active"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ymcog"]
-switch_mode = 2
-advance_mode = 2
-advance_expression = "input_active"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l0wpj"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cx45k"]
 switch_mode = 2
 advance_mode = 2
 advance_expression = "!input_active"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_owfj4"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2j0ix"]
+switch_mode = 2
 advance_mode = 2
-advance_expression = "flipping and !running"
+advance_expression = "input_active"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rm1qm"]
-priority = 2
-advance_mode = 2
-advance_expression = "!input_active and !moving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jce3j"]
-priority = 2
-advance_mode = 2
-advance_expression = "!input_active"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nxqiq"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_r8rvg"]
 advance_mode = 2
 advance_expression = "flipping and running"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8hkxn"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_quuu8"]
 switch_mode = 2
 advance_mode = 2
-advance_expression = "input_active"
+advance_expression = "moving"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mykn6"]
-switch_mode = 2
-advance_mode = 2
-advance_expression = "!input_active and running"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d6d53"]
-switch_mode = 2
-advance_mode = 2
-advance_expression = "!input_active and !moving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wqhfv"]
-advance_mode = 2
-advance_expression = "input_active"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8v7wj"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b0d4t"]
 switch_mode = 2
 advance_mode = 2
 advance_expression = "!input_active and !running"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dto57"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6mrw8"]
 advance_mode = 2
-advance_expression = "flipping"
+advance_expression = "flipping and !running"
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0ntgs"]
-states/End/position = Vector2(124, 100)
-states/Idle/node = SubResource("AnimationNodeAnimation_xm7s7")
-states/Idle/position = Vector2(293, 100)
-states/Running/node = SubResource("AnimationNodeStateMachine_gigxc")
-states/Running/position = Vector2(711, 84)
-states/Stopping/node = SubResource("AnimationNodeAnimation_v5o6d")
-states/Stopping/position = Vector2(363, 249)
-"states/Turning Around/node" = SubResource("AnimationNodeAnimation_vd460")
-"states/Turning Around/position" = Vector2(510, -31)
-"states/Turning Around While Running/node" = SubResource("AnimationNodeAnimation_nq7iy")
-"states/Turning Around While Running/position" = Vector2(649, 249)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_xs6nw"), "Idle", "Turning Around", SubResource("AnimationNodeStateMachineTransition_fwhxw"), "Idle", "Running", SubResource("AnimationNodeStateMachineTransition_alt5i"), "Turning Around", "Running", SubResource("AnimationNodeStateMachineTransition_ymcog"), "Turning Around", "Idle", SubResource("AnimationNodeStateMachineTransition_l0wpj"), "Running", "Turning Around", SubResource("AnimationNodeStateMachineTransition_owfj4"), "Running", "Idle", SubResource("AnimationNodeStateMachineTransition_rm1qm"), "Running", "Stopping", SubResource("AnimationNodeStateMachineTransition_jce3j"), "Running", "Turning Around While Running", SubResource("AnimationNodeStateMachineTransition_nxqiq"), "Turning Around While Running", "Running", SubResource("AnimationNodeStateMachineTransition_8hkxn"), "Turning Around While Running", "Stopping", SubResource("AnimationNodeStateMachineTransition_mykn6"), "Stopping", "Idle", SubResource("AnimationNodeStateMachineTransition_d6d53"), "Stopping", "Running", SubResource("AnimationNodeStateMachineTransition_wqhfv"), "Turning Around While Running", "Idle", SubResource("AnimationNodeStateMachineTransition_8v7wj"), "Stopping", "Turning Around", SubResource("AnimationNodeStateMachineTransition_dto57")]
-graph_offset = Vector2(-76, -75)
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3518n"]
+advance_mode = 2
+advance_expression = "input_active"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fj4s1"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0ncjy"]
+advance_mode = 2
+advance_expression = "!input_active and running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_whls5"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ju1au"]
+advance_mode = 2
+advance_expression = "flipping and !running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0fn05"]
+advance_mode = 2
+advance_expression = "flipping and running"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_absnx"]
+states/End/position = Vector2(101, 100)
+states/Idle/node = SubResource("AnimationNodeAnimation_yy7na")
+states/Idle/position = Vector2(591, 100)
+states/Moving/node = SubResource("AnimationNodeStateMachine_kcwuq")
+states/Moving/position = Vector2(769, 100)
+states/Stopping/node = SubResource("AnimationNodeAnimation_ij1p3")
+states/Stopping/position = Vector2(423, 214)
+"states/Turning Around/node" = SubResource("AnimationNodeAnimation_jbinl")
+"states/Turning Around/position" = Vector2(596, -31)
+"states/Turning Around While Running/node" = SubResource("AnimationNodeAnimation_tbyol")
+"states/Turning Around While Running/position" = Vector2(682, 214)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_365to"), "Idle", "Moving", SubResource("AnimationNodeStateMachineTransition_ua7r8"), "Moving", "Idle", SubResource("AnimationNodeStateMachineTransition_w1qrf"), "Idle", "Turning Around", SubResource("AnimationNodeStateMachineTransition_edvm0"), "Turning Around", "Idle", SubResource("AnimationNodeStateMachineTransition_cx45k"), "Turning Around", "Moving", SubResource("AnimationNodeStateMachineTransition_2j0ix"), "Moving", "Turning Around While Running", SubResource("AnimationNodeStateMachineTransition_r8rvg"), "Turning Around While Running", "Moving", SubResource("AnimationNodeStateMachineTransition_quuu8"), "Turning Around While Running", "Idle", SubResource("AnimationNodeStateMachineTransition_b0d4t"), "Moving", "Turning Around", SubResource("AnimationNodeStateMachineTransition_6mrw8"), "Stopping", "Moving", SubResource("AnimationNodeStateMachineTransition_3518n"), "Moving", "Stopping", SubResource("AnimationNodeStateMachineTransition_0ncjy"), "Stopping", "Idle", SubResource("AnimationNodeStateMachineTransition_whls5"), "Stopping", "Turning Around", SubResource("AnimationNodeStateMachineTransition_ju1au"), "Stopping", "Turning Around While Running", SubResource("AnimationNodeStateMachineTransition_0fn05")]
+graph_offset = Vector2(59, -78)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5te28"]
 animation = &"jumping"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e5lw6"]
-animation = &"landing"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6unf0"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7c6vx"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_otwao"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nec3y"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_olapg"]
+states/End/position = Vector2(115, 100)
+states/Jumping/node = SubResource("AnimationNodeAnimation_5te28")
+states/Jumping/position = Vector2(157, 181)
+transitions = ["Start", "Jumping", SubResource("AnimationNodeStateMachineTransition_7c6vx"), "Jumping", "End", SubResource("AnimationNodeStateMachineTransition_nec3y")]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gidp4"]
+animation = &"landing"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ba5dd"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d6e1f"]
+advance_mode = 2
+advance_expression = "!grounded"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pf2hm"]
+advance_mode = 2
+advance_expression = "grounded"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hl4ja"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qxlnb"]
 advance_mode = 2
 advance_expression = "jumping"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hd5ow"]
-switch_mode = 2
-advance_mode = 2
-advance_expression = "!grounded"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ris6w"]
-advance_mode = 2
-advance_expression = "grounded"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pl0rs"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ixjwo"]
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ckjl4"]
-priority = 2
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rlmxl"]
 advance_mode = 2
-advance_expression = "!grounded"
+advance_expression = "jumping"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_81cac"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_45exn"]
 advance_mode = 2
-advance_expression = "grounded"
+advance_expression = "!grounded and !jumping"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vqbx8"]
+advance_mode = 2
+advance_expression = "attacking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qjgdb"]
+switch_mode = 2
+advance_mode = 2
 
 [resource]
-states/End/position = Vector2(100, 118)
-states/Falling/node = SubResource("AnimationNodeAnimation_2q0d8")
-states/Falling/position = Vector2(613, 118)
-states/Grounded/node = SubResource("AnimationNodeStateMachine_0ntgs")
-states/Grounded/position = Vector2(301, 118)
-states/Jumping/node = SubResource("AnimationNodeAnimation_fj4s1")
-states/Jumping/position = Vector2(443, 9.298)
-states/Landing/node = SubResource("AnimationNodeAnimation_e5lw6")
-states/Landing/position = Vector2(443, 185.298)
-states/Start/position = Vector2(173, 118)
-transitions = ["Start", "Grounded", SubResource("AnimationNodeStateMachineTransition_6unf0"), "Grounded", "Jumping", SubResource("AnimationNodeStateMachineTransition_otwao"), "Jumping", "Falling", SubResource("AnimationNodeStateMachineTransition_hd5ow"), "Falling", "Landing", SubResource("AnimationNodeStateMachineTransition_ris6w"), "Landing", "Grounded", SubResource("AnimationNodeStateMachineTransition_pl0rs"), "Grounded", "Falling", SubResource("AnimationNodeStateMachineTransition_ckjl4"), "Jumping", "Landing", SubResource("AnimationNodeStateMachineTransition_81cac")]
-graph_offset = Vector2(-181, -87.702)
+states/AirBorne/node = SubResource("AnimationNodeStateMachine_lqvtg")
+states/AirBorne/position = Vector2(560.278, 118)
+"states/Attack Grounded/node" = SubResource("AnimationNodeStateMachine_d4bg0")
+"states/Attack Grounded/position" = Vector2(169.278, -10.098)
+states/End/position = Vector2(-28, 118)
+states/Grounded/node = SubResource("AnimationNodeStateMachine_absnx")
+states/Grounded/position = Vector2(271.278, 118)
+states/Jumping/node = SubResource("AnimationNodeStateMachine_olapg")
+states/Jumping/position = Vector2(418.278, 26.902)
+states/Landing/node = SubResource("AnimationNodeAnimation_gidp4")
+states/Landing/position = Vector2(418.278, 196.902)
+states/Start/position = Vector2(76, 118)
+transitions = ["Start", "Grounded", SubResource("AnimationNodeStateMachineTransition_ba5dd"), "Grounded", "AirBorne", SubResource("AnimationNodeStateMachineTransition_d6e1f"), "AirBorne", "Landing", SubResource("AnimationNodeStateMachineTransition_pf2hm"), "Landing", "Grounded", SubResource("AnimationNodeStateMachineTransition_hl4ja"), "Grounded", "Jumping", SubResource("AnimationNodeStateMachineTransition_qxlnb"), "Jumping", "AirBorne", SubResource("AnimationNodeStateMachineTransition_ixjwo"), "Landing", "Jumping", SubResource("AnimationNodeStateMachineTransition_rlmxl"), "Landing", "AirBorne", SubResource("AnimationNodeStateMachineTransition_45exn"), "Grounded", "Attack Grounded", SubResource("AnimationNodeStateMachineTransition_vqbx8"), "Attack Grounded", "Grounded", SubResource("AnimationNodeStateMachineTransition_qjgdb")]
+graph_offset = Vector2(-225.722, -57.098)

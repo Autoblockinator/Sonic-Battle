@@ -3,7 +3,7 @@ extends Node
 
 var debug_mode := true
 var debug_options := {
-	'esc_quit': true,
+	"esc_quit": true,
 }
 
 var mouse_mode_stack := {}
@@ -40,22 +40,22 @@ func end_mouse_mode_override(index: int):
 ## Set `repeat` to repeat multiple times. <0 means infinite repeats.
 func delay(function: Callable, time = 1, repeat := 0) -> Dictionary:
 	if not typeof(time) in [TYPE_INT, TYPE_FLOAT]:
-		assert(false); return {'err': ERR.TYPE}
+		assert(false); return {"err": ERR.TYPE}
 	var key := randi()
 	while key in delayed_calls: key = randi()
 	var data := {
-		'start_time': time,
-		'time': time,
-		'function': function,
-		'repeat': repeat
+		"start_time": time,
+		"time": time,
+		"function": function,
+		"repeat": repeat
 	}
 	delayed_calls[key] = data
-	return {'err': ERR.OK, 'key': key, 'data': data}
+	return {"err": ERR.OK, "key": key, "data": data}
 
 ## Cancel a delay and returns delay data, including `err`.
 func cancel_delay(key: int) -> Dictionary:
-	if !(key in delayed_calls.keys()): return {'err': ERR.NOT_FOUND}
-	var out := {'err': ERR.OK, 'data': delayed_calls[key]}
+	if !(key in delayed_calls.keys()): return {"err": ERR.NOT_FOUND}
+	var out := {"err": ERR.OK, "data": delayed_calls[key]}
 	delayed_calls.erase(key)
 	return out
 

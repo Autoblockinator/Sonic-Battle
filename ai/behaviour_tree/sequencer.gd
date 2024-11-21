@@ -14,7 +14,7 @@ var current_id := -1
 
 
 func start(blackboard: Dictionary):
-	blackboard.root.connect('reevaluating', func(): current_id = -1)
+	blackboard.root.connect("reevaluating", func(): current_id = -1)
 	super.start(blackboard)
 	return
 
@@ -28,4 +28,3 @@ func evaluate() -> BehaviourTreeNode:
 
 	current_id = wrap(current_id + 1, 0, len(branches))
 	return branches[current_id]
-

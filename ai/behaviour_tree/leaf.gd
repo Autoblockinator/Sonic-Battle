@@ -9,4 +9,3 @@ func activated(): return
 
 ## Not the same as _process() this only gets called when this leaf is active.
 func tick(delta: float): return
-

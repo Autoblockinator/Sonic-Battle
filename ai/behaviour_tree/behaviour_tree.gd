@@ -9,15 +9,15 @@ signal reevaluating
 
 var active_path: Array[BehaviourTreeNode] = []
 var root_flow_controller: BehaviourTreeFlowController = null
-var blackboard := {'root': self}
+var blackboard := {"root": self}
 
 
 func evaluate():
 	if len(active_path) == 0:
 		active_path = [root_flow_controller]
-		emit_signal('reevaluating')
+		emit_signal("reevaluating")
 	else:
-		emit_signal('evaluating')
+		emit_signal("evaluating")
 
 	var path_changed := false
 	while !is_instance_of(active_path[-1], BehaviourTreeLeaf):
@@ -48,7 +48,7 @@ func _ready():
 	
 	assert(
 		is_instance_valid(root_flow_controller),
-		'Tree has no valid root flow control node.'
+		"Tree has no valid root flow control node."
 	)
 
 	root_flow_controller.start(blackboard)

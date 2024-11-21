@@ -1,11 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://42suk7rdo5uj"]
+[gd_scene load_steps=7 format=3 uid="uid://42suk7rdo5uj"]
 
 [ext_resource type="Script" path="res://characters/character.gd" id="1_43dcs"]
+[ext_resource type="Texture2D" uid="uid://ntmurf5ljn3" path="res://assets/Floor_Shad.png" id="2_ppsnc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t1l3m"]
-height = 1.8
+radius = 0.4
+height = 1.5
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gp44u"]
+radius = 0.4
+height = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wimw5"]
+blend_mode = 3
+shading_mode = 0
+specular_mode = 2
+albedo_texture = ExtResource("2_ppsnc")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7t6hc"]
+material = SubResource("StandardMaterial3D_wimw5")
+size = Vector2(1.2, 1.2)
+center_offset = Vector3(0, 0.05, 0)
 
 [node name="Character" type="CharacterBody3D"]
+collision_layer = 3
+collision_mask = 2
 script = ExtResource("1_43dcs")
 metadata/_edit_lock_ = true
 
@@ -13,15 +34,28 @@ metadata/_edit_lock_ = true
 unique_name_in_owner = true
 shape = SubResource("CapsuleShape3D_t1l3m")
 
+[node name="FloorScanArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 2
+
+[node name="FlrScnArCol" type="CollisionShape3D" parent="FloorScanArea"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+shape = SubResource("CapsuleShape3D_gp44u")
+
 [node name="Sprite" type="Sprite3D" parent="."]
 unique_name_in_owner = true
-pixel_size = 0.05
+pixel_size = 0.04
 billboard = 1
 double_sided = false
 texture_filter = 0
 
-[node name="FloorScan" type="RayCast3D" parent="."]
+[node name="FloorScanRay" type="RayCast3D" parent="."]
 unique_name_in_owner = true
+visible = false
+enabled = false
+collision_mask = 2
 hit_from_inside = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -31,3 +65,15 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 root_node = NodePath("%AnimationPlayer/..")
 anim_player = NodePath("..")
+
+[node name="FloorShad" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("PlaneMesh_7t6hc")
+
+[node name="FloorShadScan" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+target_position = Vector3(0, -6, 0)
+collision_mask = 2
+
+[connection signal="body_entered" from="FloorScanArea" to="." method="_on_floor_scan_area_body_entered"]
+[connection signal="body_exited" from="FloorScanArea" to="." method="_on_floor_scan_area_body_exited"]

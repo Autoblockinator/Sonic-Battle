@@ -8,16 +8,21 @@
 
 [node name="Sonic" groups=["characters"] instance=ExtResource("1_2nqcm")]
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 texture = ExtResource("2_y54io")
 hframes = 8
-vframes = 9
+vframes = 10
 
-[node name="AnimationPlayer" parent="." index="3"]
+[node name="FloorScanRay" parent="." index="3"]
+visible = true
+
+[node name="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": ExtResource("3_posi2")
 }
 
 [node name="AnimationTree" parent="AnimationPlayer" index="0"]
 tree_root = ExtResource("4_wqvcq")
+"parameters/Grounded/Moving/BlendTree/Run Speed/scale" = 1.0
 script = ExtResource("3_nufnt")

@@ -2,4 +2,3 @@ extends AnimationPlayer
 
 
 var states
-
